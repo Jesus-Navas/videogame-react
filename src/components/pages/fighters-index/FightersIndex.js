@@ -1,56 +1,49 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import fightersArray from '../../../fighter-info'
-import './FightersIndex.css'
-import { Link } from 'react-router-dom'
-import Fighter from '../fighters-details/FighterDetail'
-import Skills from '../skills/skills'
+import './FightersIndex.css';
+import { Link, useLocation } from 'react-router-dom';
+import FighterDetails from './../../fighters-details/FightersDetail';
+import Skills from './../../skills/skills';
 
+export default function FightersIndex({ fighters }) {
 
-class Fighters extends Component {
+    const useQuery = () => useLocation().search;
 
-    constructor(props) {
+    const getCurrentQueryfromUrl = Number(useQuery().substring(1));
 
-        super(props)
+    const [currentQuery, setCurrentQuery] = useState(getCurrentQueryfromUrl || 0);
+    const [fighterSelected, setFighterSelected] = useState(fighters[currentQuery]);
 
-        this.state = {
+    const showFighterDetails = () => {
 
-            fighters: fightersArray,
+        setCurrentQuery(getCurrentQueryfromUrl);
 
-        }
+        setFighterSelected(fighters[currentQuery]);
 
-    }
+    };
 
-    componentDidMount() {
+    useEffect(showFighterDetails, [currentQuery, fighters, getCurrentQueryfromUrl]);
 
-        console.log(this.props)
-    }
+    return (
+        <>
+            <div className='d-flex justify-content-around align-items-start mx-5'>
 
-    render() {
-
-        return (
-            <>
-                <div className="d-flex justify-content-around align-items-start mx-5">
-                    <div className="section-avatar">
-                        {this.state.fighters.map((fighter, idx) => {
-
-                            return (
-
-                                <Link to={`?${idx}`}><img className="avatar" src={`/img/${fighter.avatar}`} alt={fighter.name} /></Link>
-
-                            )
-                        })}
-                    </div>
-                    <div className="section-fighter">
-                        <Fighter />
-                    </div>
-                    <div className="section-skills">
-                        <Skills />
-                    </div>
+                <div className='section-avatar'>
+                    {fighters.map((fighter, idx) => {
+                        return (
+                            <Link to={`?${idx}`}>
+                                <img className='avatar' src={`/img/${fighter.avatar}`} alt={fighter.name} />
+                            </Link>
+                        );
+                    })}
                 </div>
-            </>
-        )
-    }
+                <div className='section-fighter'>
+                    <FighterDetails fighter={fighterSelected} />
+                </div>
+                <div className='section-skills'>
+                    <Skills fighter={fighterSelected} />
+                </div>
+            </div>
+        </>
+    );
 }
-
-export default Fighters;
