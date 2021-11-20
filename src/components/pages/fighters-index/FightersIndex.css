@@ -1,0 +1,23 @@
+.avatar{
+    width:20%;
+    height: auto;
+    padding: 1%;
+    
+}
+.section-avatar{
+    width:30%;
+    padding:2%
+}
+.section-fighter{
+    width:40%;
+    padding:2%
+}
+.section-skills{
+    width:20%;
+    padding:2%
+}
+.avatar:hover{
+
+    transform: scale(1.2);
+
+}
