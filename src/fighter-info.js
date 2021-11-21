@@ -20,7 +20,7 @@ const fighter = [
         cooldown: 50,
         accuracy: 75,
         img: "nake.gif",
-        avatar: "nake-avatar-active.png"
+        avatar: "nake-avatar.png"
     },
     {
         name: "Mr Boceto",
